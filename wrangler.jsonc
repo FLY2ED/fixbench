@@ -1,0 +1,10 @@
+{
+  // Wrangler config for the fixbench leaderboard — a plain ES-module Worker.
+  // Schema reference enables editor validation/autocomplete.
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "fixbench",
+  "main": "worker/index.ts",
+  // Set to the date this Worker was authored (current date).
+  "compatibility_date": "2026-06-15"
+  // No bindings required: the leaderboard data is imported as a JSON module at build time.
+}

@@ -1,0 +1,8 @@
+{
+  "id": "002-paginate",
+  "title": "paginate returns wrong slice (off-by-one)",
+  "problemStatement": "paginate(items, page, pageSize) should return the slice of `items` for a 1-based `page`, where each page holds at most `pageSize` items. Page 1 returns items[0..pageSize-1], page 2 returns the next pageSize items, and so on. It currently computes the slice bounds incorrectly so pages overlap or drop items at the boundary. Fix src/paginate.ts so that paginate.test.ts passes. Do NOT modify any test file.",
+  "targetTest": "paginate.test.ts",
+  "guardTests": ["guard.test.ts"],
+  "allowedFiles": ["src/paginate.ts"]
+}

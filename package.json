@@ -1,0 +1,27 @@
+{
+  "name": "fixbench",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Mini AI coding-agent evaluation harness + auto-fix bot (NAVER 2026 인턴 Tech②/③ 데모)",
+  "scripts": {
+    "fixbench": "tsx src/cli.ts",
+    "run:noop": "tsx src/cli.ts run --task 001-parse-duration --agent noop --grader deterministic",
+    "run:oracle": "tsx src/cli.ts run --task 001-parse-duration --agent oracle --grader deterministic",
+    "run:self": "tsx src/cli.ts run --task 001-parse-duration --agent self-loop --grader deterministic --trials 3",
+    "typecheck": "tsc --noEmit",
+    "leaderboard:snapshot": "node -e \"require('fs').copyFileSync('compare.json','public/leaderboard-data.json')\"",
+    "cf:dev": "wrangler dev",
+    "cf:deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "tsx": "^4",
+    "typescript": "^5.5",
+    "vitest": "^3",
+    "wrangler": "^4"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.104.1"
+  }
+}

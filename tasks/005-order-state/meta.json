@@ -1,0 +1,8 @@
+{
+  "id": "005-order-state",
+  "title": "OrderMachine cannot cancel a paid order",
+  "problemStatement": "The OrderMachine in src/machine.ts drives order-lifecycle transitions through the table in src/transitions.ts. An order should be cancellable both after it is placed AND after it is paid (a refund) — but only before it ships. Right now a paid order has no `cancel` transition, so calling cancel on a paid order is rejected. Fix the source (src/transitions.ts and/or src/machine.ts) so that machine.test.ts passes, without weakening any other transition. Do NOT modify any test file.",
+  "targetTest": "machine.test.ts",
+  "guardTests": ["guard.test.ts"],
+  "allowedFiles": ["src/machine.ts", "src/transitions.ts"]
+}

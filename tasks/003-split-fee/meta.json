@@ -1,0 +1,8 @@
+{
+  "id": "003-split-fee",
+  "title": "splitFee parts don't sum back to the total",
+  "problemStatement": "splitFee(totalCents, n) should split an integer amount of cents into `n` parts as evenly as possible, returning an array of `n` non-negative integers that SUM EXACTLY to totalCents. The remainder cents (when totalCents is not divisible by n) must be distributed one each to the earliest parts, so parts are within 1 cent of each other and earlier parts are >= later parts. It currently drops the remainder, so the parts under-sum the total. Fix src/splitFee.ts so that splitFee.test.ts passes. Do NOT modify any test file.",
+  "targetTest": "splitFee.test.ts",
+  "guardTests": ["guard.test.ts"],
+  "allowedFiles": ["src/splitFee.ts"]
+}

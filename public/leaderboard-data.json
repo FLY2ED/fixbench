@@ -1,0 +1,211 @@
+{
+  "agents": [
+    "noop",
+    "oracle"
+  ],
+  "tasks": [
+    "001-parse-duration",
+    "002-paginate",
+    "003-split-fee",
+    "004-mask-phone",
+    "005-order-state"
+  ],
+  "grader": "deterministic",
+  "trials": 1,
+  "rows": [
+    {
+      "taskKey": "001-parse-duration",
+      "agg": {
+        "taskId": "001-parse-duration",
+        "agent": "noop",
+        "grader": "deterministic",
+        "trials": 1,
+        "passAt1": 0,
+        "passAtK": false,
+        "regressions": 0,
+        "avgInputTokens": 0,
+        "avgOutputTokens": 0,
+        "avgCostUsd": 0,
+        "avgLatencyMs": 0,
+        "avgToolCalls": 0
+      }
+    },
+    {
+      "taskKey": "002-paginate",
+      "agg": {
+        "taskId": "002-paginate",
+        "agent": "noop",
+        "grader": "deterministic",
+        "trials": 1,
+        "passAt1": 0,
+        "passAtK": false,
+        "regressions": 0,
+        "avgInputTokens": 0,
+        "avgOutputTokens": 0,
+        "avgCostUsd": 0,
+        "avgLatencyMs": 0,
+        "avgToolCalls": 0
+      }
+    },
+    {
+      "taskKey": "003-split-fee",
+      "agg": {
+        "taskId": "003-split-fee",
+        "agent": "noop",
+        "grader": "deterministic",
+        "trials": 1,
+        "passAt1": 0,
+        "passAtK": false,
+        "regressions": 0,
+        "avgInputTokens": 0,
+        "avgOutputTokens": 0,
+        "avgCostUsd": 0,
+        "avgLatencyMs": 0,
+        "avgToolCalls": 0
+      }
+    },
+    {
+      "taskKey": "004-mask-phone",
+      "agg": {
+        "taskId": "004-mask-phone",
+        "agent": "noop",
+        "grader": "deterministic",
+        "trials": 1,
+        "passAt1": 0,
+        "passAtK": false,
+        "regressions": 0,
+        "avgInputTokens": 0,
+        "avgOutputTokens": 0,
+        "avgCostUsd": 0,
+        "avgLatencyMs": 0,
+        "avgToolCalls": 0
+      }
+    },
+    {
+      "taskKey": "005-order-state",
+      "agg": {
+        "taskId": "005-order-state",
+        "agent": "noop",
+        "grader": "deterministic",
+        "trials": 1,
+        "passAt1": 0,
+        "passAtK": false,
+        "regressions": 0,
+        "avgInputTokens": 0,
+        "avgOutputTokens": 0,
+        "avgCostUsd": 0,
+        "avgLatencyMs": 0,
+        "avgToolCalls": 0
+      }
+    },
+    {
+      "taskKey": "001-parse-duration",
+      "agg": {
+        "taskId": "001-parse-duration",
+        "agent": "oracle",
+        "grader": "deterministic",
+        "trials": 1,
+        "passAt1": 1,
+        "passAtK": true,
+        "regressions": 0,
+        "avgInputTokens": 0,
+        "avgOutputTokens": 0,
+        "avgCostUsd": 0,
+        "avgLatencyMs": 0,
+        "avgToolCalls": 0
+      }
+    },
+    {
+      "taskKey": "002-paginate",
+      "agg": {
+        "taskId": "002-paginate",
+        "agent": "oracle",
+        "grader": "deterministic",
+        "trials": 1,
+        "passAt1": 1,
+        "passAtK": true,
+        "regressions": 0,
+        "avgInputTokens": 0,
+        "avgOutputTokens": 0,
+        "avgCostUsd": 0,
+        "avgLatencyMs": 0,
+        "avgToolCalls": 0
+      }
+    },
+    {
+      "taskKey": "003-split-fee",
+      "agg": {
+        "taskId": "003-split-fee",
+        "agent": "oracle",
+        "grader": "deterministic",
+        "trials": 1,
+        "passAt1": 1,
+        "passAtK": true,
+        "regressions": 0,
+        "avgInputTokens": 0,
+        "avgOutputTokens": 0,
+        "avgCostUsd": 0,
+        "avgLatencyMs": 0,
+        "avgToolCalls": 0
+      }
+    },
+    {
+      "taskKey": "004-mask-phone",
+      "agg": {
+        "taskId": "004-mask-phone",
+        "agent": "oracle",
+        "grader": "deterministic",
+        "trials": 1,
+        "passAt1": 1,
+        "passAtK": true,
+        "regressions": 0,
+        "avgInputTokens": 0,
+        "avgOutputTokens": 0,
+        "avgCostUsd": 0,
+        "avgLatencyMs": 0,
+        "avgToolCalls": 0
+      }
+    },
+    {
+      "taskKey": "005-order-state",
+      "agg": {
+        "taskId": "005-order-state",
+        "agent": "oracle",
+        "grader": "deterministic",
+        "trials": 1,
+        "passAt1": 1,
+        "passAtK": true,
+        "regressions": 0,
+        "avgInputTokens": 0,
+        "avgOutputTokens": 0,
+        "avgCostUsd": 0,
+        "avgLatencyMs": 0,
+        "avgToolCalls": 0
+      }
+    }
+  ],
+  "rollups": [
+    {
+      "agent": "oracle",
+      "tasks": 5,
+      "meanPassAt1": 1,
+      "totalTrials": 5,
+      "avgInputTokens": 0,
+      "avgOutputTokens": 0,
+      "avgCostUsd": 0,
+      "avgLatencyMs": 0,
+      "totalRegressions": 0
+    },
+    {
+      "agent": "noop",
+      "tasks": 5,
+      "meanPassAt1": 0,
+      "totalTrials": 5,
+      "avgInputTokens": 0,
+      "avgOutputTokens": 0,
+      "avgCostUsd": 0,
+      "avgLatencyMs": 0,
+      "totalRegressions": 0
+    }
+  ]
+}

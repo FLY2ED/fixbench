@@ -1,0 +1,8 @@
+{
+  "id": "001-parse-duration",
+  "title": "parseDuration miscomputes minutes",
+  "problemStatement": "parseDuration(input) should return the total number of SECONDS for a duration string such as '1h30m', '45m', '2h', or '90s'. It currently returns the wrong value when minutes are present. Fix src/parseDuration.ts so that parseDuration.test.ts passes. Do NOT modify any test file.",
+  "targetTest": "parseDuration.test.ts",
+  "guardTests": ["guard.test.ts"],
+  "allowedFiles": ["src/parseDuration.ts"]
+}

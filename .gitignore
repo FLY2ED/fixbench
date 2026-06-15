@@ -1,0 +1,12 @@
+node_modules
+dist
+report.json
+report.md
+compare.json
+leaderboard.md
+proposed-fix.diff
+fix-result.json
+.env
+*.log
+
+# public/leaderboard-data.json is a COMMITTED snapshot for the Worker — do not ignore it.

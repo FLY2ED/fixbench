@@ -1,0 +1,145 @@
+# fixbench auto-fix bot (Tech② "자동 수정 봇")
+#
+# SAFETY POSTURE — read before changing:
+#   * This workflow runs the eval agent on a single task and PROPOSES a patch.
+#   * It opens a DRAFT pull request ONLY. A human must review and click
+#     "Ready for review" + merge. The workflow NEVER merges anything itself
+#     (no auto-merge, no push to a protected branch).
+#   * The PR is only opened when the proposed fix actually PASSES the
+#     deterministic grader (target test green AND no regression). A FAIL run
+#     still uploads the artifacts for inspection but opens no PR.
+#   * Everything the bot writes is reviewable: the unified diff and the metrics
+#     JSON are attached as a build artifact, and the metrics are embedded in the
+#     PR body.
+#
+# Action versions verified against current upstream docs (2026-06):
+#   actions/checkout@v6, actions/setup-node@v6, peter-evans/create-pull-request@v8.
+
+name: fixbench-autofix
+
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: "Task id under tasks/ to auto-fix"
+        required: true
+        default: "003-split-fee"
+      agent:
+        description: "Agent to run (self-loop | claude-code | oracle | noop)"
+        required: true
+        default: "self-loop"
+
+# Least privilege: we only need to read the repo, push the bot branch, and open a PR.
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  autofix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install deps
+        run: npm ci
+
+      # Run the standalone auto-fix entry. It isolates a throwaway copy of the
+      # task, runs the agent on it, grades it, and writes proposed-fix.diff +
+      # fix-result.json to the repo root. Task fixtures are NEVER modified.
+      - name: Run auto-fix agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: npx tsx src/fix.ts --task "${{ github.event.inputs.task }}" --agent "${{ github.event.inputs.agent }}"
+
+      # Always keep the proposed patch + metrics, even on a FAIL run, so the
+      # outcome is auditable regardless of whether a PR gets opened.
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fixbench-autofix-${{ github.event.inputs.task }}
+          path: |
+            proposed-fix.diff
+            fix-result.json
+          if-no-files-found: warn
+
+      # Parse the grader verdict so the next steps can guard on it.
+      - name: Read fix result
+        id: result
+        run: |
+          PASSED=$(node -p "require('./fix-result.json').passed")
+          echo "passed=$PASSED" >> "$GITHUB_OUTPUT"
+          # Expose pretty metrics for the PR body.
+          {
+            echo 'metrics<<METRICS_EOF'
+            node -e '
+              const r = require("./fix-result.json");
+              const u = r.usage || {};
+              console.log(
+                `| metric | value |\n|---|---|\n` +
+                `| task | \`${r.taskId}\` |\n` +
+                `| agent | \`${r.agent}\` |\n` +
+                `| passed | ${r.passed ? "✅ true" : "❌ false"} |\n` +
+                `| target test | ${r.targetPassed ? "green" : "red"} |\n` +
+                `| regressed | ${r.regressed} |\n` +
+                `| cost (USD) | $${(u.costUsd ?? 0).toFixed(4)} |\n` +
+                `| tool calls | ${u.toolCalls ?? 0} |\n` +
+                `| latency (ms) | ${u.latencyMs ?? 0} |\n` +
+                `| input tokens | ${u.inputTokens ?? 0} |\n` +
+                `| output tokens | ${u.outputTokens ?? 0} |`
+              );
+            '
+            echo METRICS_EOF
+          } >> "$GITHUB_OUTPUT"
+
+      # Apply the proposed patch to the working tree so the DRAFT PR's diff shows
+      # the actual code change a reviewer would be approving. We only reach this
+      # step when the fix PASSED the deterministic grader.
+      - name: Apply proposed patch
+        if: steps.result.outputs.passed == 'true'
+        run: |
+          git apply --whitespace=nowarn proposed-fix.diff
+          # The patch + metrics files are tooling output, not part of the fix.
+          # Removing them keeps the committed change set == the proposed fix only.
+          rm -f proposed-fix.diff fix-result.json
+
+      # Open a DRAFT PR with the patch. draft: always-true keeps it a draft even
+      # on re-runs. The label makes bot PRs easy to filter. NO auto-merge —
+      # a human reviews and merges.
+      - name: Open draft PR
+        if: steps.result.outputs.passed == 'true'
+        uses: peter-evans/create-pull-request@v8
+        with:
+          draft: always-true
+          branch: fixbench/autofix-${{ github.event.inputs.task }}
+          base: main
+          commit-message: "fixbench: auto-fix ${{ github.event.inputs.task }} via ${{ github.event.inputs.agent }}"
+          title: "[fixbench-autofix] proposed fix for ${{ github.event.inputs.task }}"
+          labels: fixbench-autofix
+          body: |
+            ## 🤖 fixbench auto-fix bot — PROPOSED change (DRAFT)
+
+            This patch was generated automatically by the `${{ github.event.inputs.agent }}` agent
+            for task **`${{ github.event.inputs.task }}`** and verified by the deterministic grader
+            (target test green, no regression).
+
+            > **Human review required.** This is a DRAFT PR. The bot does **not** auto-merge.
+            > Inspect the diff and the metrics below, then mark "Ready for review" and merge if you agree.
+
+            ### Metrics
+            ${{ steps.result.outputs.metrics }}
+
+            The full unified diff and `fix-result.json` are also attached as a workflow artifact.
+
+      # When the fix did NOT pass, surface that in the run log — no PR is opened.
+      - name: No PR (fix did not pass)
+        if: steps.result.outputs.passed != 'true'
+        run: |
+          echo "::warning::Proposed fix did not pass the deterministic grader — no PR opened. See the uploaded artifact for the attempted diff."

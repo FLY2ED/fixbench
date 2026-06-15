@@ -1,0 +1,8 @@
+{
+  "id": "004-mask-phone",
+  "title": "maskPhone leaks middle digits",
+  "problemStatement": "maskPhone(phone) takes a phone number string of the form 'NNN-NNNN-NNNN' (three dash-separated groups of digits) and must mask every digit of the MIDDLE group with '*', keeping the first and last groups and the dashes intact. For example '010-1234-5678' becomes '010-****-5678'. It currently leaves one digit of the middle group unmasked, leaking PII. Fix src/maskPhone.ts so that maskPhone.test.ts passes. Do NOT modify any test file.",
+  "targetTest": "maskPhone.test.ts",
+  "guardTests": ["guard.test.ts"],
+  "allowedFiles": ["src/maskPhone.ts"]
+}
