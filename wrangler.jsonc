@@ -5,6 +5,8 @@
   "name": "fixbench",
   "main": "worker/index.ts",
   // Set to the date this Worker was authored (current date).
-  "compatibility_date": "2026-06-15"
+  "compatibility_date": "2026-06-15",
+  // Custom domain on the naldadev.com zone — Cloudflare auto-provisions DNS + TLS.
+  "routes": [{ "pattern": "fixbench.naldadev.com", "custom_domain": true }]
   // No bindings required: the leaderboard data is imported as a JSON module at build time.
 }

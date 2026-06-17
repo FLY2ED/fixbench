@@ -72,6 +72,8 @@ Any agent can be graded by any grader. Agents (rows) and graders (columns):
 
 ## Live results (real run)
 
+**Live leaderboard → https://fixbench.naldadev.com** (Cloudflare Worker; `/data.json` serves the raw snapshot)
+
 A real `compare --agents claude-code,codex --grader deterministic --trials 1` over all 5 tasks (2026-06-15):
 
 | rank | agent | mean pass@1 | avg latency | avg cost | note |
