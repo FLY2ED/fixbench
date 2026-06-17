@@ -28,7 +28,7 @@ Built as a portfolio demo for the NAVER 2026 하계 인턴 프로덕트 트랙 a
    └──────────┘   isolate.ts
         │
         ▼
-   ┌────────────────────┐   registry: self-loop | claude-code | noop | oracle
+   ┌────────────────────┐   registry: self-loop | claude-code | codex | noop | oracle
    │  Agent  adapter    │   mutates files in repoDir to (attempt to) fix the bug
    └────────────────────┘   agents/*  →  AgentResult { usage }
         │
@@ -63,10 +63,23 @@ Any agent can be graded by any grader. Agents (rows) and graders (columns):
 | **`oracle`** — applies `tasks/<id>/.solution` (upper-bound baseline) | target PASS, no regression → ✅ | judge should say ✅ |
 | **`self-loop`** — minimal Anthropic SDK tool-use loop (needs key) | objective pass/fail | judged pass/fail |
 | **`claude-code`** — shells out to the Claude Code CLI headless (needs key/auth) | objective pass/fail | judged pass/fail |
+| **`codex`** — shells out to the OpenAI Codex CLI (`codex exec`, needs login) | objective pass/fail | judged pass/fail |
 
 - **`noop`** and **`oracle`** are deterministic baselines that need **no API key** — they bracket every metric between a known floor and ceiling.
 - **`self-loop`** is a *deliberately minimal* tool-use agent (`list_files` / `read_file` / `write_file` / `run_tests`) built on `@anthropic-ai/sdk`. It exists to be a fully-instrumented baseline, not a production agent.
 - **`claude-code`** is an honest thin wrapper that shells out to the real `claude` CLI in headless mode (`-p --output-format json --model <m> --permission-mode bypassPermissions`) with `cwd = repoDir`, and reads tokens/cost/duration back from the CLI's JSON result. It re-implements no agent loop of its own.
+- **`codex`** is the same honest pattern for the OpenAI Codex CLI (`codex exec --cd <repo> -s workspace-write --skip-git-repo-check --json`). Having **two real-agent adapters** is what makes the leaderboard a *fair head-to-head*.
+
+## Live results (real run)
+
+A real `compare --agents claude-code,codex --grader deterministic --trials 1` over all 5 tasks (2026-06-15):
+
+| rank | agent | mean pass@1 | avg latency | avg cost | note |
+|---|---|---|---|---|---|
+| 1 | `codex` | 100% (5/5) | ~76 s | n/a\* | tokens from JSONL; cost not tracked (non-Anthropic model) |
+| 1 | `claude-code` | 100% (5/5) | ~14 s | $0.098 | ~5× faster on this set |
+
+\* Honest reading of this result: (1) the micro-benchmark is easy enough that **both agents solve every task**, so correctness doesn't separate them — the live signal is **latency/cost**, and the real takeaway is that the benchmark needs *harder* tasks to differentiate quality. (2) `claude-code`'s reported `input_tokens` looks tiny (~5) because the `claude` CLI counts only *uncached* input — most context is served from cache, so the billed `cost` is the figure to trust. Surfacing exactly this kind of instrumentation nuance is the harness's job.
 
 ## Quickstart
 

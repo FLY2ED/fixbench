@@ -1,7 +1,7 @@
 {
   "agents": [
-    "noop",
-    "oracle"
+    "claude-code",
+    "codex"
   ],
   "tasks": [
     "001-parse-duration",
@@ -17,16 +17,16 @@
       "taskKey": "001-parse-duration",
       "agg": {
         "taskId": "001-parse-duration",
-        "agent": "noop",
+        "agent": "claude-code",
         "grader": "deterministic",
         "trials": 1,
-        "passAt1": 0,
-        "passAtK": false,
+        "passAt1": 1,
+        "passAtK": true,
         "regressions": 0,
-        "avgInputTokens": 0,
-        "avgOutputTokens": 0,
-        "avgCostUsd": 0,
-        "avgLatencyMs": 0,
+        "avgInputTokens": 5,
+        "avgOutputTokens": 539,
+        "avgCostUsd": 0.0968189,
+        "avgLatencyMs": 14592,
         "avgToolCalls": 0
       }
     },
@@ -34,16 +34,16 @@
       "taskKey": "002-paginate",
       "agg": {
         "taskId": "002-paginate",
-        "agent": "noop",
+        "agent": "claude-code",
         "grader": "deterministic",
         "trials": 1,
-        "passAt1": 0,
-        "passAtK": false,
+        "passAt1": 1,
+        "passAtK": true,
         "regressions": 0,
-        "avgInputTokens": 0,
-        "avgOutputTokens": 0,
-        "avgCostUsd": 0,
-        "avgLatencyMs": 0,
+        "avgInputTokens": 5,
+        "avgOutputTokens": 471,
+        "avgCostUsd": 0.09457929999999999,
+        "avgLatencyMs": 12435,
         "avgToolCalls": 0
       }
     },
@@ -51,16 +51,16 @@
       "taskKey": "003-split-fee",
       "agg": {
         "taskId": "003-split-fee",
-        "agent": "noop",
+        "agent": "claude-code",
         "grader": "deterministic",
         "trials": 1,
-        "passAt1": 0,
-        "passAtK": false,
+        "passAt1": 1,
+        "passAtK": true,
         "regressions": 0,
-        "avgInputTokens": 0,
-        "avgOutputTokens": 0,
-        "avgCostUsd": 0,
-        "avgLatencyMs": 0,
+        "avgInputTokens": 5,
+        "avgOutputTokens": 607,
+        "avgCostUsd": 0.098428,
+        "avgLatencyMs": 13614,
         "avgToolCalls": 0
       }
     },
@@ -68,16 +68,16 @@
       "taskKey": "004-mask-phone",
       "agg": {
         "taskId": "004-mask-phone",
-        "agent": "noop",
+        "agent": "claude-code",
         "grader": "deterministic",
         "trials": 1,
-        "passAt1": 0,
-        "passAtK": false,
+        "passAt1": 1,
+        "passAtK": true,
         "regressions": 0,
-        "avgInputTokens": 0,
-        "avgOutputTokens": 0,
-        "avgCostUsd": 0,
-        "avgLatencyMs": 0,
+        "avgInputTokens": 5,
+        "avgOutputTokens": 531,
+        "avgCostUsd": 0.09618489999999999,
+        "avgLatencyMs": 12503,
         "avgToolCalls": 0
       }
     },
@@ -85,16 +85,16 @@
       "taskKey": "005-order-state",
       "agg": {
         "taskId": "005-order-state",
-        "agent": "noop",
+        "agent": "claude-code",
         "grader": "deterministic",
         "trials": 1,
-        "passAt1": 0,
-        "passAtK": false,
+        "passAt1": 1,
+        "passAtK": true,
         "regressions": 0,
-        "avgInputTokens": 0,
-        "avgOutputTokens": 0,
-        "avgCostUsd": 0,
-        "avgLatencyMs": 0,
+        "avgInputTokens": 5,
+        "avgOutputTokens": 672,
+        "avgCostUsd": 0.10481580000000001,
+        "avgLatencyMs": 15589,
         "avgToolCalls": 0
       }
     },
@@ -102,16 +102,16 @@
       "taskKey": "001-parse-duration",
       "agg": {
         "taskId": "001-parse-duration",
-        "agent": "oracle",
+        "agent": "codex",
         "grader": "deterministic",
         "trials": 1,
         "passAt1": 1,
         "passAtK": true,
         "regressions": 0,
-        "avgInputTokens": 0,
-        "avgOutputTokens": 0,
+        "avgInputTokens": 141552,
+        "avgOutputTokens": 2657,
         "avgCostUsd": 0,
-        "avgLatencyMs": 0,
+        "avgLatencyMs": 71111,
         "avgToolCalls": 0
       }
     },
@@ -119,16 +119,16 @@
       "taskKey": "002-paginate",
       "agg": {
         "taskId": "002-paginate",
-        "agent": "oracle",
+        "agent": "codex",
         "grader": "deterministic",
         "trials": 1,
         "passAt1": 1,
         "passAtK": true,
         "regressions": 0,
-        "avgInputTokens": 0,
-        "avgOutputTokens": 0,
+        "avgInputTokens": 113706,
+        "avgOutputTokens": 1801,
         "avgCostUsd": 0,
-        "avgLatencyMs": 0,
+        "avgLatencyMs": 53885,
         "avgToolCalls": 0
       }
     },
@@ -136,16 +136,16 @@
       "taskKey": "003-split-fee",
       "agg": {
         "taskId": "003-split-fee",
-        "agent": "oracle",
+        "agent": "codex",
         "grader": "deterministic",
         "trials": 1,
         "passAt1": 1,
         "passAtK": true,
         "regressions": 0,
-        "avgInputTokens": 0,
-        "avgOutputTokens": 0,
+        "avgInputTokens": 135401,
+        "avgOutputTokens": 1896,
         "avgCostUsd": 0,
-        "avgLatencyMs": 0,
+        "avgLatencyMs": 53936,
         "avgToolCalls": 0
       }
     },
@@ -153,16 +153,16 @@
       "taskKey": "004-mask-phone",
       "agg": {
         "taskId": "004-mask-phone",
-        "agent": "oracle",
+        "agent": "codex",
         "grader": "deterministic",
         "trials": 1,
         "passAt1": 1,
         "passAtK": true,
         "regressions": 0,
-        "avgInputTokens": 0,
-        "avgOutputTokens": 0,
+        "avgInputTokens": 72230,
+        "avgOutputTokens": 1207,
         "avgCostUsd": 0,
-        "avgLatencyMs": 0,
+        "avgLatencyMs": 35564,
         "avgToolCalls": 0
       }
     },
@@ -170,41 +170,41 @@
       "taskKey": "005-order-state",
       "agg": {
         "taskId": "005-order-state",
-        "agent": "oracle",
+        "agent": "codex",
         "grader": "deterministic",
         "trials": 1,
         "passAt1": 1,
         "passAtK": true,
         "regressions": 0,
-        "avgInputTokens": 0,
-        "avgOutputTokens": 0,
+        "avgInputTokens": 242136,
+        "avgOutputTokens": 3298,
         "avgCostUsd": 0,
-        "avgLatencyMs": 0,
+        "avgLatencyMs": 166625,
         "avgToolCalls": 0
       }
     }
   ],
   "rollups": [
     {
-      "agent": "oracle",
+      "agent": "codex",
       "tasks": 5,
       "meanPassAt1": 1,
       "totalTrials": 5,
-      "avgInputTokens": 0,
-      "avgOutputTokens": 0,
+      "avgInputTokens": 141005,
+      "avgOutputTokens": 2171.8,
       "avgCostUsd": 0,
-      "avgLatencyMs": 0,
+      "avgLatencyMs": 76224.2,
       "totalRegressions": 0
     },
     {
-      "agent": "noop",
+      "agent": "claude-code",
       "tasks": 5,
-      "meanPassAt1": 0,
+      "meanPassAt1": 1,
       "totalTrials": 5,
-      "avgInputTokens": 0,
-      "avgOutputTokens": 0,
-      "avgCostUsd": 0,
-      "avgLatencyMs": 0,
+      "avgInputTokens": 5,
+      "avgOutputTokens": 564,
+      "avgCostUsd": 0.09816538,
+      "avgLatencyMs": 13746.6,
       "totalRegressions": 0
     }
   ]
